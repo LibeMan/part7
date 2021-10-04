@@ -1,4 +1,8 @@
 import React, { useState } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch, Route, Link, useParams
+} from "react-router-dom"
 
 const Menu = () => {
   const padding = {
@@ -6,18 +10,36 @@ const Menu = () => {
   }
   return (
     <div>
-      <a href='#' style={padding}>anecdotes</a>
-      <a href='#' style={padding}>create new</a>
-      <a href='#' style={padding}>about</a>
+      <Link to='/' style={padding}>anecdotes</Link>
+      <Link to='/create' style={padding}>create new</Link>
+      <Link to='/about' style={padding}>about</Link>
     </div>
   )
 }
 
-const AnecdoteList = ({ anecdotes }) => (
+const Anecdote = ({ anecdotes }) => {
+  const id = useParams().id
+  const anecdote = anecdotes.find(n => n.id === id) 
+  return (
+    <div>
+      <h2>{anecdote.content}</h2>
+      <div>Votes: {anecdote.votes}</div>
+      <div>For more info see <Link to={anecdote.info}>{anecdote.info}</Link></div>
+    </div>
+  )
+}
+
+
+
+const AnecdoteList = ({anecdotes}) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}</li>)}
+      {anecdotes.map(anecdote =>
+        <li key={anecdote.id}>
+          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+        </li>
+      )}
     </ul>
   </div>
 )
@@ -123,14 +145,31 @@ const App = () => {
   }
 
   return (
-    <div>
-      <h1>Software anecdotes</h1>
+    <Router>
+      <div>
+        <h1>Software anecdotes</h1>
+      </div>
       <Menu />
-      <AnecdoteList anecdotes={anecdotes} />
-      <About />
-      <CreateNew addNew={addNew} />
-      <Footer />
-    </div>
+    <Switch>
+
+      <Route path="/anecdotes/:id">
+        <Anecdote anecdotes={anecdotes} />
+      </Route>
+
+      <Route path="/about">
+        <About />
+      </Route>
+
+      <Route path="/create">
+        <CreateNew addNew={addNew} />
+      </Route>
+
+      <Route path="/">
+        <AnecdoteList anecdotes={anecdotes} />
+      </Route>
+    </Switch>
+      <Footer />  
+    </Router>
   )
 }
 
