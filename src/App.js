@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch, Route, Link, useParams, useHistory
 } from "react-router-dom"
+import { useField } from './hooks'
 
 const Menu = () => {
   const padding = {
@@ -37,7 +38,7 @@ const AnecdoteList = ({anecdotes}) => (
     <ul>
       {anecdotes.map(anecdote =>
         <li key={anecdote.id}>
-          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
+          <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content.value}</Link>
         </li>
       )}
     </ul>
@@ -67,9 +68,13 @@ const Footer = () => (
 )
 
 const CreateNew = (props) => {
-  const [content, setContent] = useState('')
+  const content = useField()
+  const author = useField('text')
+  const info = useField('text')
+  const empty = useField("")
+/*  const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const [info, setInfo] = useState('')  */
   const history = useHistory()
 
   const handleSubmit = (e) => {
@@ -83,52 +88,57 @@ const CreateNew = (props) => {
     history.push('/')
   }
 
+  const handleReset = (e) => {
+    //document.getElementById("form").reset();
+    e.preventDefault()
+    content.onClear()
+    author.onClear()
+    info.onClear()
+  }
+
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form id="form">
         <div>
-          content
-          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
+          content:
+          <input 
+            value={content.value}
+            onChange={content.onChange}/>
         </div>
         <div>
-          author
-          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
+          author:
+          <input 
+            value={author.value}
+            onChange={author.onChange} />
         </div>
         <div>
-          url for more info
-          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+          url for more info:
+          <input 
+            value={info.value}
+            onChange={info.onChange} />
         </div>
-        <button>Create</button>
+        <button onClick={handleSubmit}>Create</button>
+        <button onClick={handleReset}>Reset</button>
       </form>
     </div>
   )
 
 }
 
+
+
+
 const App = () => {
   const [anecdotes, setAnecdotes] = useState([
-    {
-      content: 'If it hurts, do it more often',
-      author: 'Jez Humble',
-      info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
-      votes: 0,
-      id: '1'
-    },
-    {
-      content: 'Premature optimization is the root of all evil',
-      author: 'Donald Knuth',
-      info: 'http://wiki.c2.com/?PrematureOptimization',
-      votes: 0,
-      id: '2'
-    }
+    
   ])
 
   const [notification, setNotification] = useState('')
 
   const addNew = (anecdote) => {
     console.log(anecdote)
-    setNotification(`a new anecedote was created: ${anecdote.content}`)
+    setNotification(`a new anecedote was created: ${anecdote.content.value}`)
     setTimeout(() => {
       setNotification(null)
     }, 5000)
