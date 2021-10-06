@@ -17,33 +17,35 @@ const useField = (type) => {
 
 const useCountry = (name) => {
   const [country, setCountry] = useState(null)
-
-  useEffect(() => {})
-
-  return country
+    useEffect(() => {
+      if (name === '') {
+        console.log('it is not set yet');
+      } else {
+        axios
+        .get(`https://restcountries.com/v3.1/name/${name}?fullText=true`)
+        .then(response => {
+          setCountry(response.data[0])
+        })
+      }
+    }, [name])
+    return country
 }
 
 const Country = ({ country }) => {
   if (!country) {
-    return null
-  }
-
-  if (!country.found) {
     return (
-      <div>
-        not found...
-      </div>
+      <div>Not found</div>
     )
   }
 
-  return (
-    <div>
-      <h3>{country.data.name} </h3>
-      <div>capital {country.data.capital} </div>
-      <div>population {country.data.population}</div> 
-      <img src={country.data.flag} height='100' alt={`flag of ${country.data.name}`}/>  
-    </div>
-  )
+return (
+  <div>
+    <h3>{country.name.common} </h3>
+    <div>capital {country.capital} </div>
+    <div>population {country.population}</div> 
+    <img src={country.flag} alt={`flag of ${country.name.common}`}/>
+  </div>
+)
 }
 
 const App = () => {
@@ -53,8 +55,16 @@ const App = () => {
 
   const fetch = (e) => {
     e.preventDefault()
+    
     setName(nameInput.value)
   }
+
+  const hook = () => {
+    console.log('effect')
+    
+  }
+  
+  
 
   return (
     <div>
