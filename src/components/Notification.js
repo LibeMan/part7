@@ -1,21 +1,28 @@
 import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 
-const Notification = ({ message, color }) => {
-  if (!message) {
+const Notification = () => {
 
-    return null
+  const notification = useSelector(state => state.notifications)
+  const dispatch = useDispatch()
+  const test = "yoyoyo"
+  const color = "red"
+  
+  if (!notification) {
+
+    return test
   }
 
   if (color === 'red'){
     return (
       <div className="error">
-        {message}
+        {notification}
       </div>
     )
   } else {
     return (
       <div className="notification">
-        {message}
+        {notification}
       </div>
     )
   }

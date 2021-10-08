@@ -6,18 +6,21 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
+import { useDispatch} from 'react-redux'
+import { doMessage } from './reducers/notificationReducer'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [errorColor, setErrorColor] = useState('')
-
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   const [loginVisible, setLoginVisible] = useState(false)
   const blogFormRef = useRef()
+
+  
+  const dispatch = useDispatch()
+  
 
 
   useEffect(() => {
@@ -62,18 +65,20 @@ const App = () => {
       setUsername('')
       setPassword('')
     } catch (exception) {
+      /*
       setErrorMessage('Wrong credentials')
       setErrorColor('red')
       setTimeout(() => {
         setErrorMessage(null)
-      }, 5000)
+      }, 5000) */
     }
   }
 
   const loginForm = () => {
+    
     const hideWhenVisible = { display: loginVisible ? 'none' : '' }
     const showWhenVisible = { display: loginVisible ? '' : 'none' }
-
+    
     return (
       <div>
         <div style={hideWhenVisible}>
@@ -134,7 +139,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      <Notification message={errorMessage} color={errorColor} />
+      <Notification />
 
       {user === null ?
         loginForm() :
