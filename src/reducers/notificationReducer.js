@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 const simpleNotes = [
     'This is the message',
     'That is not a message',

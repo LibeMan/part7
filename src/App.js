@@ -8,6 +8,7 @@ import Togglable from './components/Togglable'
 import BlogForm from './components/BlogForm'
 import { useDispatch} from 'react-redux'
 import { doMessage } from './reducers/notificationReducer'
+import BlogList from './components/Bloglist'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -22,13 +23,6 @@ const App = () => {
   const dispatch = useDispatch()
   
 
-
-  useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs( blogs )
-    )
-  }, [])
-
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
     if (loggedUserJSON) {
@@ -38,10 +32,7 @@ const App = () => {
     }
   }, [])
 
-  //Sort blogs
-  blogs.sort(function (a, b) {
-    return b.likes - a.likes
-  })
+ 
 
   //Refresh page
   function refreshPage(){
@@ -116,15 +107,7 @@ const App = () => {
     </Togglable>
   )
 
-  //Add like
-  const likes = (id, blogObject) => {
-    blogService
-      .update(id, blogObject)
-      .then(returnedBlog => {
-        setBlogs(blogs.map(blog => blog.id !== id ? blog : returnedBlog))
-      })
-    console.log('Jooooooo')
-  }
+  
 
   //Delete blog
   const deleteBlog = (id) => {
@@ -149,9 +132,8 @@ const App = () => {
         </div>
       }
       <div id="blogs">
-        {blogs.map(blog =>
-          <Blog key={blog.id} blog={blog} likes={likes} user={user} deleteBlog={deleteBlog}/>
-        )}
+        <BlogList />
+        
       </div>
     </div>
   )
