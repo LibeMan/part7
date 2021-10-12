@@ -1,9 +1,12 @@
 
 import React, { useState } from 'react'
+import { useDispatch } from "react-redux"
+import { createBlog } from '../reducers/blogReducer'
 
 
+const BlogForm = () => {
 
-const BlogForm = ({ createBlog , user }) => {
+  const dispatch = useDispatch()
 
   //Dehä ska veks
   const [newBlogTitle, setNewBlogTitle] = useState('')
@@ -30,16 +33,14 @@ const BlogForm = ({ createBlog , user }) => {
 
   const addBlog = async (event) => {
     event.preventDefault()
-    createBlog
-    // await blogService.create
-    ({
+    const newObject = {
       title: newBlogTitle,
       author: newBlogAuthor,
       url: newBlogUrl,
-      likes: 0,
-      user: user,
-    })
-
+      likes: 0
+    }
+    dispatch(createBlog(newObject))
+    console.log("Hej hej här e objekte:",newObject)
     setNewBlogTitle('')
     setNewBlogAuthor('')
     setNewBlogUrl('')

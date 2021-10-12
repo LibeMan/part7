@@ -34,11 +34,6 @@ const App = () => {
 
  
 
-  //Refresh page
-  function refreshPage(){
-    window.location.reload()
-  }
-
   //Handle login
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -91,30 +86,26 @@ const App = () => {
   }
 
   //Add blog
+  /*
   const addBlog = (blogObject) => {
     blogFormRef.current.toggleVisibility()
     blogService
       .create(blogObject)
       .then(returnedBlog => {
         setBlogs(blogs.concat(returnedBlog))
-        refreshPage()
+        //refreshPage()
       })
-  }
-
+  }*/
+  /*
   const blogForm = () => (
     <Togglable buttonLabel='new blog' buttonLabel2='cancel' ref={blogFormRef}>
       <BlogForm createBlog={addBlog} user={user}/>
     </Togglable>
-  )
+  )*/
 
   
 
-  //Delete blog
-  const deleteBlog = (id) => {
-    blogService
-      .deleteObj(id)
-      .then(refreshPage())
-  }
+  
 
 
 
@@ -128,7 +119,7 @@ const App = () => {
         loginForm() :
         <div>
           <p>{user.name} logged-in</p>
-          {blogForm()}
+          <BlogForm />
         </div>
       }
       <div id="blogs">

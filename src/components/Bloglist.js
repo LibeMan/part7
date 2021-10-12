@@ -2,11 +2,17 @@ import { useSelector } from "react-redux"
 import React from 'react'
 import Togglable from '../components/Togglable'
 import { useDispatch } from "react-redux"
-import { setLikes } from "../reducers/blogReducer"
+import { setLikes, deleteBlog } from "../reducers/blogReducer"
 
 
 const BlogList = () => {
+    
+    //Refresh page
+    function refreshPage(){
+        window.location.reload()
+    }
 
+    //Push blogs
     const dispatch = useDispatch()
 
     //Take all blogs
@@ -27,7 +33,12 @@ const BlogList = () => {
         dispatch(setLikes(id, newObject))
         //notification här
         
-        console.log('Jooooooo')
+        console.log('Jooooooo', id)
+    }
+
+    //Delete blog
+    const delBlog = (id) => {
+        dispatch(deleteBlog(id))
     }
         
 
@@ -42,6 +53,7 @@ const BlogList = () => {
                         Url: {blog.url} <br/>
                         Likes: {blog.likes} 
                         <button onClick={() => likes(blog.id, blog)}>Like</button>
+                        <button onClick={() => delBlog(blog.id)}>Delete</button>
                         <br/>
                     </Togglable>
                   <br/>

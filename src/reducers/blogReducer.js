@@ -12,19 +12,30 @@ const blogReducer = (state = [], action) =>{
             return action.data
         case "LIKE":
             const id = action.id
+            console.log("Id:",id)
             const rightBlog = state.find(n => n.id === id)
+            console.log("Här e ", rightBlog)
             const newBlog = {
                 ...rightBlog,
                 likes: rightBlog.likes + 1
             }
             return state.map(blog => 
                 blog.id !== id ? blog : newBlog)
+        case "DELETE":
+            return refreshPage()
+            
         default:
             return state
        
     }
 }
 
+//Refresh page
+function refreshPage(){
+  window.location.reload()
+}
+
+//Initialize blogs
 export const initializeBlogs = (blogs) => {
     return {
       type: 'INIT_BLOGS',
@@ -32,7 +43,7 @@ export const initializeBlogs = (blogs) => {
     }
   }
 
-
+//Create blog
 export const createBlog = (newObject) => {
     return async dispatch => {
         const newBlog = await blogService.create(newObject)
@@ -43,16 +54,30 @@ export const createBlog = (newObject) => {
     }
 }
 
+//Set likes
 export const setLikes = (id, blog) => {
     return async dispatch => {
-      const likes = await blogService.update(id, blog)
+      const newBlog = await blogService.update(id, blog)
+      console.log("Snille:",newBlog.id)
       dispatch({
         type: 'LIKE',
-        id: 'id',
-        data: likes
+        id: id,
+        data: newBlog
       })
     }
   }
+
+//Delete blog
+export const deleteBlog = (id) => {
+  return async dispatch => {
+    await blogService
+    .deleteObj(id)
+    dispatch({
+      type:'DELETE'
+    })
+  }
+  
+}
 
 
 export default blogReducer
