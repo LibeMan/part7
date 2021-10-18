@@ -6,11 +6,14 @@ import blogReducer from './reducers/blogReducer'
 import notificationReducer from './reducers/notificationReducer'
 import blogService from './services/blogs'
 import loginReducer from './reducers/loginReducer'
+import userReducer from './reducers/userReducer'
+import userService from './services/users'
 
 const reducer = combineReducers({
     //notifications: notificationReducer,
     blogs: blogReducer,
-    user: loginReducer
+    user: loginReducer,
+    users: userReducer
   })
 
 const store = createStore(
@@ -25,5 +28,10 @@ blogService.getAll().then(blogs =>
     store.dispatch({type: 'NEW_BLOG', data: blog})
   })
 )
+
+userService.getAllUsers().then(users => 
+  users.forEach(user => {
+    store.dispatch({type: 'NEW_USER', data: user})
+  }))
 
 export default store

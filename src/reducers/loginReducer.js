@@ -1,13 +1,18 @@
 
 import blogService from "../services/blogs"
 import loginService from "../services/login"
-const user = {}
+const user = null
 
 const loginReducer = (state = user, action) => {
     switch (action.type) {
         case 'LOGIN':
-            const user = action.data
-            return user
+            if (action.user === null){
+                return null
+            } else {
+                const user = action.user
+                return user
+            }
+            
         default:
             return state
     }
@@ -15,11 +20,11 @@ const loginReducer = (state = user, action) => {
 
 export const setLogin = user => {
     return async dispatch => {
-        blogService.setToken(user.token)
-        const newUser = await loginService.login(user)
+        //blogService.setToken(user.token)
+        //const newUser = await loginService.login(user)
         dispatch({
           type:'LOGIN',
-          data:newUser,
+          user
         })
     }
 }
