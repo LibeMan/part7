@@ -1,5 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import {
+    BrowserRouter as Router,
+    Switch, Route, Link, useParams, useHistory
+  } from "react-router-dom"
 
 const User = () => {
     const users = useSelector(({users}) => {
@@ -8,14 +12,15 @@ const User = () => {
     })
 
     return(
-        <div>
-            <h1>Users:</h1>
-            {users.map(user =>
-                <div key={user.id}>
-                    {user.username}, Blogs created: {user.blogs.length}
-                </div>    
-            )}
-        </div>
+            <div>
+                <h1>Users:</h1>
+                {users.map(user =>
+                    <div key={user.id}>
+                        <Link to='/user'>{user.username}, Blogs created: {user.blogs.length}</Link>
+                    </div>    
+                )}
+            </div>
+        
     )
 }
 
