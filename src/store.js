@@ -8,12 +8,14 @@ import blogService from './services/blogs'
 import loginReducer from './reducers/loginReducer'
 import userReducer from './reducers/userReducer'
 import userService from './services/users'
+import userInfoReducer from './reducers/userInfoReducer'
 
 const reducer = combineReducers({
     //notifications: notificationReducer,
     blogs: blogReducer,
     user: loginReducer,
-    users: userReducer
+    users: userReducer,
+    userInfo: userInfoReducer
   })
 
 const store = createStore(

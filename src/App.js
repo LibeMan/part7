@@ -15,6 +15,7 @@ import {
   BrowserRouter as Router,
   Switch, Route, Link, useParams, useHistory
 } from "react-router-dom"
+import DisplayUserInfo from './components/DisplayUserInfo'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -101,6 +102,10 @@ const handleLogin = async (event) => {
       <div>
         <h2>blogs</h2>
         <Notification />
+
+        <Route path='/user'>
+          <DisplayUserInfo />
+        </Route>
 
         {user === null ?
           loginForm() :
