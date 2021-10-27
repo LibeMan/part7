@@ -3,6 +3,8 @@ import React from 'react'
 import Togglable from '../components/Togglable'
 import { useDispatch } from "react-redux"
 import { setLikes, deleteBlog } from "../reducers/blogReducer"
+import { Link } from "react-router-dom"
+import { setOneBlog } from "../reducers/oneBlogReducer"
 
 
 const BlogList = () => {
@@ -48,14 +50,10 @@ const BlogList = () => {
             {sort(blogs)}
             {blogs.map(blog =>
                 <div className='blog' key={blog.id}>
-                    <div>Title: {blog.title}, Author: {blog.author}</div>
-                    <Togglable buttonLabel='show' buttonLabel2='hide'>
-                        Url: {blog.url} <br/>
-                        Likes: {blog.likes} 
-                        <button onClick={() => likes(blog.id, blog)}>Like</button>
-                        <button onClick={() => delBlog(blog.id)}>Delete</button>
-                        <br/>
-                    </Togglable>
+
+                    
+                    <div> <Link to={`/blog/${blog.id}`} onClick={() => dispatch(setOneBlog(blog))}> Title: {blog.title}, Author: {blog.author} </Link></div>
+                    
                   <br/>
                 </div>
             )}
@@ -64,3 +62,14 @@ const BlogList = () => {
 }
 
 export default BlogList
+
+/* Gammal kod inne i return:
+<Togglable buttonLabel='show' buttonLabel2='hide'>
+                        Url: {blog.url} <br/>
+                        Likes: {blog.likes} 
+                        <button onClick={() => likes(blog.id, blog)}>Like</button>
+                        <button onClick={() => delBlog(blog.id)}>Delete</button>
+                        <br/>
+                    </Togglable>
+
+*/

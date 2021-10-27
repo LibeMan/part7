@@ -1,34 +1,36 @@
 /* eslint-disable default-case */
 const simpleNotes = [
-    'This is the message',
-    'That is not a message',
     ''
 ]
 
-const initialState = simpleNotes[0]
-
 const notificationReducer = (state = simpleNotes, action) => {
   switch (action.type) {
-    case 'FIRST':
-      return state[0]
+    case 'NOTIFICATION_SHOW':
+        const updatedNotification = ''.concat(action.text)
+        console.log("Toimii tääl:",action.text)
+        return updatedNotification
   
-    case 'SECOND':
-      return state[1]
+    case 'NOTIFICATION_HIDE':
+        const hideNotification = ''
+        console.log("Nyt hidaa")
+        return hideNotification
+    default:
+        return state
   }
-
-  return state[2]
 }
 
-export const doMessage = (yo) => {
-  if (yo === 0){
-    return {
-      type:'FIRST'
+export const setNotification = (message, time) => {
+  const t = time * 100
+
+    return async dispatch => {
+      dispatch({
+        type: 'NOTIFICATION_SHOW',
+        text: message
+      })
+      setTimeout(() => {
+        dispatch({type: 'NOTIFICATION_HIDE'})
+      }, t)
     }
-  } else{
-    return {
-      type:'SECOND'
-    }
-  }
   
 }
 

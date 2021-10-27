@@ -4,28 +4,30 @@ import { useSelector, useDispatch } from 'react-redux'
 const Notification = () => {
 
   const notification = useSelector(state => state.notifications)
-  const dispatch = useDispatch()
-  const test = "yoyoyo"
-  const color = "red"
-  
-  if (!notification) {
 
-    return test
+  const style = {
+    border: 'solid',
+    padding: 10,
+    borderWidth: 1
+  }
+  const styleNull = {
+    border: "white",
   }
 
-  if (color === 'red'){
+  if (notification == '') {
     return (
-      <div className="error">
+      <div style = {styleNull}>
         {notification}
       </div>
     )
   } else {
     return (
-      <div className="notification">
+      <div style = {style}>
         {notification}
       </div>
     )
   }
+  
 
 }
 

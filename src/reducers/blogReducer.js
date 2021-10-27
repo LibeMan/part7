@@ -23,6 +23,16 @@ const blogReducer = (state = [], action) =>{
                 blog.id !== id ? blog : newBlog)
         case "DELETE":
             return refreshPage()
+        case 'COMMENT':
+            const idComment = action.id
+            const blogToComment = state.find(n => n.id === idComment)
+            const changedBlogComment = { 
+                ...blogToComment, 
+                comments: blogToComment.comments.concat(action.comment)
+            }
+            return state.map(blog =>
+                blog.id !== idComment ? blog : changedBlogComment 
+            )
             
         default:
             return state
@@ -77,6 +87,18 @@ export const deleteBlog = (id) => {
     })
   }
   
+}
+
+//Set comments
+export const setBlogComments = (id, newObject) => {
+  return async dispatch => {
+    const newComment = await blogService.update(id, newObject)
+    dispatch({
+      type: 'COMMENT',
+      id: id,
+      data: newComment
+    })
+  }
 }
 
 

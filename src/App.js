@@ -93,6 +93,20 @@ const handleLogin = async (event) => {
       </div>
     )
   }
+
+  //Menu
+  const Menu = () => {
+    const padding = {
+      paddingRight: 5
+    }
+    return (
+      <div>
+        <Link to='/' style={padding} >Blogs</Link>
+        <Link to='/create' style={padding}>Create New</Link>
+        <Link to='/users' style={padding}>Users</Link>
+      </div>
+    )
+  }
  
 
 
@@ -100,6 +114,7 @@ const handleLogin = async (event) => {
   return (
     <Router>
       <div>
+        <Menu/>
         <h2>blogs</h2>
         <Notification />
 
@@ -111,11 +126,19 @@ const handleLogin = async (event) => {
           loginForm() :
           <div>
             <p>{user.name} logged-in</p>
-            <BlogForm />
           </div>
         }
+        
+        <Route path='/create'>
+          <BlogForm />
+        </Route>
+        <Route path='/blog' >
+            <Blog/>
+        </Route>
         <div id="blogs">
-          <BlogList />
+          <Route path='/'>
+            <BlogList />
+          </Route>
           <User/>
         </div>
       </div>
