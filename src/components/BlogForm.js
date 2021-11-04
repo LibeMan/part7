@@ -1,8 +1,9 @@
 
 import React, { useState } from 'react'
+import { Form } from 'react-bootstrap'
 import { useDispatch } from "react-redux"
 import { createBlog } from '../reducers/blogReducer'
-
+import { Button } from 'react-bootstrap'
 
 const BlogForm = () => {
 
@@ -49,12 +50,24 @@ const BlogForm = () => {
   return (
     <div>
       <h2>Create new</h2>
-      <form onSubmit={addBlog}>
-            title: <input id='title' value={newBlogTitle} onChange={handleBlogTitleChange}/> <br/>
-            author: <input id='author' value={newBlogAuthor} onChange={handleBlogAuthorChange}/> <br/>
-            url: <input id='url' value={newBlogUrl} onChange={handleBlogUrlChange}/> <br/>
-        <button type="submit">create new blog</button>
-      </form>
+      <Form onSubmit={addBlog}>
+        <Form.Group>
+          <Form.Label>
+            title: <Form.Control id='title' value={newBlogTitle} onChange={handleBlogTitleChange}/> 
+          </Form.Label>
+          <br/>
+          <Form.Label>
+            author: <Form.Control id='author' value={newBlogAuthor} onChange={handleBlogAuthorChange}/> 
+          </Form.Label>
+          <br/>
+          <Form.Label>
+            url: <Form.Control id='url' value={newBlogUrl} onChange={handleBlogUrlChange}/> 
+          </Form.Label>
+          <br/>
+        <Button variant="primary" type="submit">create new blog</Button>
+        </Form.Group>
+      </Form>
+      <br/>
     </div>
   )
 }

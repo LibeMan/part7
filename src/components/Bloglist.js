@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux"
 import { setLikes, deleteBlog } from "../reducers/blogReducer"
 import { Link } from "react-router-dom"
 import { setOneBlog } from "../reducers/oneBlogReducer"
-
+import { Table } from 'react-bootstrap'
 
 const BlogList = () => {
     
@@ -48,15 +48,19 @@ const BlogList = () => {
     return(
         <div>
             {sort(blogs)}
-            {blogs.map(blog =>
-                <div className='blog' key={blog.id}>
+            <Table striped>
+                {blogs.map(blog =>
+                    <tr key={blog.id}>
+                        <td>
+                            
+                            <div> <Link to={`/blog/${blog.id}`} onClick={() => dispatch(setOneBlog(blog))}> Blog Title - {blog.title} - Author: {blog.author} </Link></div>
+                            <br/>
 
+                        </td>
                     
-                    <div> <Link to={`/blog/${blog.id}`} onClick={() => dispatch(setOneBlog(blog))}> Title: {blog.title}, Author: {blog.author} </Link></div>
-                    
-                  <br/>
-                </div>
-            )}
+                    </tr>
+                )}
+            </Table>
         </div>
     )
 }

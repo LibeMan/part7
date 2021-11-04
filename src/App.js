@@ -17,6 +17,8 @@ import {
 } from "react-router-dom"
 import DisplayUserInfo from './components/DisplayUserInfo'
 
+//Bootsrap stuff
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
@@ -113,11 +115,11 @@ const handleLogin = async (event) => {
   //Return the app
   return (
     <Router>
-      <div>
+      <div className="container">
         <Menu/>
-        <h2>blogs</h2>
+        <h1>Blogs</h1>
         <Notification />
-
+        
         <Route path='/user'>
           <DisplayUserInfo />
         </Route>
@@ -128,19 +130,18 @@ const handleLogin = async (event) => {
             <p>{user.name} logged-in</p>
           </div>
         }
-        
-        <Route path='/create'>
-          <BlogForm />
-        </Route>
-        <Route path='/blog' >
-            <Blog/>
-        </Route>
-        <div id="blogs">
-          <Route path='/'>
-            <BlogList />
+          <Route path='/create'>
+            <BlogForm />
           </Route>
+          <Route path='/blog' >
+              <Blog/>
+          </Route>
+          <div id="blogs">
+            <Route path='/'>
+              <BlogList />
+            </Route>  
+          </div>
           <User/>
-        </div>
       </div>
     </Router>
     
